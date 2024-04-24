@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, SectionList} from 'react-native';
 import React, {useEffect, useLayoutEffect} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ScreenParamList, Screens} from '../../Adapter/Navigation/screenTypes';
@@ -14,6 +14,7 @@ import {useMovieController} from '../../Controller/Profile/useMovieController';
 import {FlatList} from 'react-native-gesture-handler';
 import {Fonts} from '../../Utils/Fonts';
 import {BlankSpace} from '../Components/BlankSpace';
+import {Image_URL} from '../../Utils/constants';
 
 type Props = NativeStackScreenProps<ScreenParamList, Screens.Home>;
 const Home = ({navigation}: Props): JSX.Element => {
@@ -25,8 +26,26 @@ const Home = ({navigation}: Props): JSX.Element => {
     fetchGenre();
   }, []);
 
-  const fetchGenre = async () => {
+  useEffect(() => {
+    fetchMovieList();
+  }, [movieModel.getPrimaryReleaseYear()]);
+
+  const fetchGenre = async (): Promise<void> => {
     await movieController._fetchGenere();
+  };
+
+  const fetchMovieList = async (): Promise<void> => {
+    await movieController._fetchMovies();
+  };
+
+  const loadMore = (): void => {
+    if (movieModel.getPrimaryReleaseYear() < 2024) {
+      movieModel.setPrimaryReleaseYear(movieModel.getPrimaryReleaseYear() + 1);
+    }
+  };
+
+  const filterHandler = (filterId: string | number): void => {
+    movieModel.setselectedGenreId(filterId);
   };
 
   return (
@@ -37,31 +56,35 @@ const Home = ({navigation}: Props): JSX.Element => {
       <View
         style={{
           backgroundColor: Colors.primary_002,
-          paddingLeft: hp(1.6),
+          paddingLeft: hp(1.8),
         }}>
         <Image
           source={images.Icon}
           style={{
             height: wp(16),
-            width: wp(30),
+            width: wp(32),
           }}
           resizeMode="contain"
         />
         <BlankSpace height={hp(1.4)} />
         <FlatList
           horizontal
+          initialNumToRender={10}
           showsHorizontalScrollIndicator={false}
           data={movieModel.getGenre()}
+          ItemSeparatorComponent={() => <BlankSpace width={wp(2)} />}
           renderItem={({item}) => {
-            console.log(item, '::');
             return (
               <TouchableOpacity
+                onPress={() => filterHandler(item.id)}
                 style={{
-                  backgroundColor: Colors.secondary_004,
+                  backgroundColor:
+                    item.id === movieModel.getSelectedGenreId()
+                      ? Colors.secondary_001
+                      : Colors.secondary_004,
                   paddingHorizontal: wp(3),
                   paddingVertical: wp(1.5),
                   borderRadius: 4,
-                  marginRight: wp(2),
                 }}>
                 <Text
                   style={{
@@ -77,7 +100,22 @@ const Home = ({navigation}: Props): JSX.Element => {
         />
         <BlankSpace height={hp(2)} />
       </View>
-      {/* <View></View> */}
+      {/* {console.log(movieModel.movies, '++++++++++++++++++=')} */}
+
+      <SectionList
+        sections={movieModel.movies}
+        keyExtractor={(item, index) => item + index}
+        onEndReached={loadMore}
+        renderItem={({item}) => (
+          <View>
+            <Image
+              source={{uri: `${Image_URL}${item.backdrop_path}`}}
+              style={{height: wp(60), width: wp(60)}}
+            />
+          </View>
+        )}
+        renderSectionHeader={({section: {title}}) => <Text>{title}</Text>}
+      />
     </Background>
   );
 };

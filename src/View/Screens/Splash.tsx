@@ -22,7 +22,7 @@ const Splash = ({navigation}: Props): JSX.Element => {
       style={{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.primary_001,
+        backgroundColor: Colors.primary_002,
       }}>
       <Image
         source={images.Icon}
