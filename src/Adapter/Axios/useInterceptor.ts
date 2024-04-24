@@ -1,9 +1,7 @@
 import {axiosInstance} from './axiosInstance';
 import {tmdbAccessToken} from '../../Utils/constants';
-import {ErrorMethods} from '../../Utils/ErrorHandler';
 
 export const useInterceptor = (): void => {
-
   /*Request interceptor */
 
   axiosInstance.interceptors.request.use(
@@ -24,7 +22,7 @@ export const useInterceptor = (): void => {
     response => {
       return response;
     },
-    (error: any) => {
+    error => {
       // const originalConfig = error.config;
 
       // if (

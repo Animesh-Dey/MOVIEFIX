@@ -1,9 +1,5 @@
 import {useState} from 'react';
-import {
-  convertedMovieListType,
-  genreListType,
-  movieListType,
-} from '../Types/types';
+import {genreListType} from '../Types/types';
 
 export const useMovieModel = () => {
   const [genreList, setGenreList] = useState<genreListType>([]);

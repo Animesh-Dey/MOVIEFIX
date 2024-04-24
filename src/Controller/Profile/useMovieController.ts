@@ -1,10 +1,6 @@
 import {apiServices} from '../../Adapter/Axios/axiosService';
 import {MovieModel} from '../../Model/Profile/useMovieModel';
-import {
-  _fetchGenere,
-  _fetchMoviesType,
-  convertedMovieListType,
-} from '../../Model/Types/types';
+import {_fetchGenere, _fetchMoviesType} from '../../Model/Types/types';
 import {tmdbApiKey} from '../../Utils/constants';
 
 export const useMovieController = (movieModel: MovieModel) => {

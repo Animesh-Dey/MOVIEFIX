@@ -1,7 +1,5 @@
 import {View, Text, Image, TouchableOpacity, SectionList} from 'react-native';
-import React, {useEffect, useLayoutEffect} from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {ScreenParamList, Screens} from '../../Adapter/Navigation/screenTypes';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import Background from '../Components/Background';
 import {useColor} from '../../Model/Color/useColor';
 import {images} from '../../Utils/ImagePath';
@@ -16,11 +14,12 @@ import {Fonts} from '../../Utils/Fonts';
 import {BlankSpace} from '../Components/BlankSpace';
 import {Image_URL} from '../../Utils/constants';
 
-type Props = NativeStackScreenProps<ScreenParamList, Screens.Home>;
-const Home = ({navigation}: Props): JSX.Element => {
+const Home = (): JSX.Element => {
   const movieModel = useMovieModel();
   const movieController = useMovieController(movieModel);
   const Colors = useColor();
+  const sectionListRef = useRef<SectionList>(null);
+  const [index, setIndex] = useState(0);
 
   useLayoutEffect(() => {
     fetchGenre();
@@ -28,7 +27,7 @@ const Home = ({navigation}: Props): JSX.Element => {
 
   useEffect(() => {
     fetchMovieList();
-  }, [movieModel.getPrimaryReleaseYear()]);
+  }, [movieModel.getPrimaryReleaseYear(), movieModel.getSelectedGenreId()]);
 
   const fetchGenre = async (): Promise<void> => {
     await movieController._fetchGenere();
@@ -45,7 +44,14 @@ const Home = ({navigation}: Props): JSX.Element => {
   };
 
   const filterHandler = (filterId: string | number): void => {
+    sectionListRef.current?.scrollToLocation({
+      animated: false,
+      itemIndex: 0,
+      sectionIndex: 0
+    });
     movieModel.setselectedGenreId(filterId);
+    movieModel.setPrimaryReleaseYear(2012);
+    movieModel.setMovies([]);
   };
 
   return (
@@ -103,6 +109,7 @@ const Home = ({navigation}: Props): JSX.Element => {
       {/* {console.log(movieModel.movies, '++++++++++++++++++=')} */}
 
       <SectionList
+        ref={sectionListRef}
         sections={movieModel.movies}
         keyExtractor={(item, index) => item + index}
         onEndReached={loadMore}
