@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Splah = () => {
+const Home = () => {
   return (
     <View>
-      <Text>Splah</Text>
+      <Text>Home</Text>
     </View>
   )
 }
 
-export default Splah
+export default Home
