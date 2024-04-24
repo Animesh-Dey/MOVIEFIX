@@ -12,6 +12,8 @@ import {
 import {useMovieModel} from '../../Model/Profile/useMovieModel';
 import {useMovieController} from '../../Controller/Profile/useMovieController';
 import {FlatList} from 'react-native-gesture-handler';
+import {Fonts} from '../../Utils/Fonts';
+import {BlankSpace} from '../Components/BlankSpace';
 
 type Props = NativeStackScreenProps<ScreenParamList, Screens.Home>;
 const Home = ({navigation}: Props): JSX.Element => {
@@ -35,8 +37,7 @@ const Home = ({navigation}: Props): JSX.Element => {
       <View
         style={{
           backgroundColor: Colors.primary_002,
-          paddingLeft: hp(2),
-          position: 'relative',
+          paddingLeft: hp(1.6),
         }}>
         <Image
           source={images.Icon}
@@ -46,16 +47,35 @@ const Home = ({navigation}: Props): JSX.Element => {
           }}
           resizeMode="contain"
         />
+        <BlankSpace height={hp(1.4)} />
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           data={movieModel.getGenre()}
-          renderItem={({item}) => (
-            <TouchableOpacity>
-              <Text>{item?.name}</Text>
-            </TouchableOpacity>
-          )}
+          renderItem={({item}) => {
+            console.log(item, '::');
+            return (
+              <TouchableOpacity
+                style={{
+                  backgroundColor: Colors.secondary_004,
+                  paddingHorizontal: wp(3),
+                  paddingVertical: wp(1.5),
+                  borderRadius: 4,
+                  marginRight: wp(2),
+                }}>
+                <Text
+                  style={{
+                    color: Colors.secondary_002,
+                    fontSize: hp(1.8),
+                    fontFamily: Fonts.Saira_Regular,
+                  }}>
+                  {item?.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
         />
+        <BlankSpace height={hp(2)} />
       </View>
       {/* <View></View> */}
     </Background>

@@ -6,4 +6,5 @@ export const light: ColorObject = {
   [ColorName.secondary_001]: '#F0283C',
   [ColorName.secondary_002]: '#F5F5F5',
   [ColorName.secondary_003]: '#FFFFFF',
+  [ColorName.secondary_004]: '#484848',
 };
