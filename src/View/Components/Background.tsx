@@ -1,20 +1,16 @@
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, SafeAreaView} from 'react-native';
 import React from 'react';
-import {useColor} from '../../Model/Color/useColor';
 
 const Background = ({
   children,
   style,
 }: {
-  children: React.ReactElement;
+  children?: string | JSX.Element | JSX.Element[] | JSX.Element;
   style: object;
 }) => {
-  const Colors = useColor();
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, backgroundColor: Colors.primary_001, ...style}}>
-        {children}
-      </View>
+      <View style={{flex: 1, ...style}}>{children}</View>
     </SafeAreaView>
   );
 };

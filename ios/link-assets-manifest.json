@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/Assets/Fonts/Archivo-Regular.ttf",
+      "sha1": "c14f15d27da595dcfe84fde32fdb75fc1e970e46"
+    },
+    {
+      "path": "src/Assets/Fonts/ReadMe.txt",
+      "sha1": "c062fdc4ccd5ce6c9d5244a7d3281e7df8072752"
+    },
+    {
+      "path": "src/Assets/Fonts/Saira-Regular.ttf",
+      "sha1": "d9171e1fa1f21f5ad429cdc4be6ea3bb8350c99d"
+    }
+  ]
+}
