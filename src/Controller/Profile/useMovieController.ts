@@ -1,6 +1,10 @@
 import {apiServices} from '../../Adapter/Axios/axiosService';
 import {MovieModel} from '../../Model/Profile/useMovieModel';
-import {_fetchGenere, _fetchMoviesType} from '../../Model/Types/types';
+import {
+  _fetchGenere,
+  _fetchMoviesType,
+  movieListType,
+} from '../../Model/Types/types';
 import {tmdbApiKey} from '../../Utils/constants';
 
 export const useMovieController = (movieModel: MovieModel) => {
@@ -29,14 +33,18 @@ export const useMovieController = (movieModel: MovieModel) => {
           ? `/discover/movie?api_key=${tmdbApiKey}&sort_by=popularity.desc&primary_release_year=${movieModel.getPrimaryReleaseYear()}&page=1&vote_count.gte=100`
           : `/discover/movie?api_key=${tmdbApiKey}&sort_by=popularity.desc&primary_release_year=${movieModel.getPrimaryReleaseYear()}&page=1&vote_count.gte=100&with_genres=${movieModel.getSelectedGenreId()}`,
       );
-
-      const convertedMovies = {
+      const convertedMovies: any = {
         title: movieModel.getPrimaryReleaseYear(),
-        data: [...response.results],
+        data: [],
       };
-      // console.log(convertedMovies, '::::');
+      for (let i = 0; i < response.results.length; i += 2) {
+        const innerArray: movieListType = [
+          response.results[i],
+          response.results[i+1],
+        ];
+        convertedMovies.data.push(innerArray);
+      }
       movieModel.setMovies(prev => prev.concat(convertedMovies));
-
       return;
     } catch (error) {
       console.log(error, '_fetchMovies');

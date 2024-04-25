@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {genreListType} from '../Types/types';
+import {genreListType, movieListType} from '../Types/types';
 
 export const useMovieModel = () => {
   const [genreList, setGenreList] = useState<genreListType>([]);
@@ -30,6 +30,7 @@ export const useMovieModel = () => {
   const setPrimaryReleaseYear = (year: number): void => {
     setPrimary_release_year(year);
   };
+
   const getPrimaryReleaseYear = (): number => {
     return primary_release_year;
   };

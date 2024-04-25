@@ -13,6 +13,7 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Fonts} from '../../Utils/Fonts';
 import {BlankSpace} from '../Components/BlankSpace';
 import {Image_URL} from '../../Utils/constants';
+import Button from '../Components/Button';
 
 const Home = (): JSX.Element => {
   const movieModel = useMovieModel();
@@ -47,7 +48,7 @@ const Home = (): JSX.Element => {
     sectionListRef.current?.scrollToLocation({
       animated: false,
       itemIndex: 0,
-      sectionIndex: 0
+      sectionIndex: 0,
     });
     movieModel.setselectedGenreId(filterId);
     movieModel.setPrimaryReleaseYear(2012);
@@ -81,47 +82,46 @@ const Home = (): JSX.Element => {
           ItemSeparatorComponent={() => <BlankSpace width={wp(2)} />}
           renderItem={({item}) => {
             return (
-              <TouchableOpacity
-                onPress={() => filterHandler(item.id)}
-                style={{
-                  backgroundColor:
-                    item.id === movieModel.getSelectedGenreId()
-                      ? Colors.secondary_001
-                      : Colors.secondary_004,
-                  paddingHorizontal: wp(3),
-                  paddingVertical: wp(1.5),
-                  borderRadius: 4,
-                }}>
-                <Text
-                  style={{
-                    color: Colors.secondary_002,
-                    fontSize: hp(1.8),
-                    fontFamily: Fonts.Saira_Regular,
-                  }}>
-                  {item?.name}
-                </Text>
-              </TouchableOpacity>
+              <Button
+                item={item}
+                movieModel={movieModel}
+                filterHandler={filterHandler}
+              />
             );
           }}
         />
         <BlankSpace height={hp(2)} />
       </View>
-      {/* {console.log(movieModel.movies, '++++++++++++++++++=')} */}
-
       <SectionList
         ref={sectionListRef}
         sections={movieModel.movies}
         keyExtractor={(item, index) => item + index}
         onEndReached={loadMore}
-        renderItem={({item}) => (
+        initialNumToRender={10}
+        renderItem={({item, index}) => {
+          console.log(index);
+          return (
+            <View style={{flexDirection: 'row'}}>
+              {item[0]?.backdrop_path && (
+                <Image
+                  source={{uri: `${Image_URL}${item[0].backdrop_path}`}}
+                  style={{height: wp(60), width: wp(60)}}
+                />
+              )}
+              {item[1]?.backdrop_path && (
+                <Image
+                  source={{uri: `${Image_URL}${item[1].backdrop_path}`}}
+                  style={{height: wp(60), width: wp(60)}}
+                />
+              )}
+            </View>
+          );
+        }}
+        renderSectionHeader={({section: {title}}) => (
           <View>
-            <Image
-              source={{uri: `${Image_URL}${item.backdrop_path}`}}
-              style={{height: wp(60), width: wp(60)}}
-            />
+            <Text>{title}</Text>
           </View>
         )}
-        renderSectionHeader={({section: {title}}) => <Text>{title}</Text>}
       />
     </Background>
   );
