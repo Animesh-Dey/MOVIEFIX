@@ -1,4 +1,9 @@
-import {View, Text, Image, TouchableOpacity, SectionList} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  SectionList,
+} from 'react-native';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import Background from '../Components/Background';
 import {useColor} from '../../Model/Color/useColor';
@@ -12,15 +17,14 @@ import {useMovieController} from '../../Controller/Profile/useMovieController';
 import {FlatList} from 'react-native-gesture-handler';
 import {Fonts} from '../../Utils/Fonts';
 import {BlankSpace} from '../Components/BlankSpace';
-import {Image_URL} from '../../Utils/constants';
 import Button from '../Components/Button';
+import MovieCard from '../Components/MovieCard';
 
 const Home = (): JSX.Element => {
   const movieModel = useMovieModel();
   const movieController = useMovieController(movieModel);
   const Colors = useColor();
   const sectionListRef = useRef<SectionList>(null);
-  const [index, setIndex] = useState(0);
 
   useLayoutEffect(() => {
     fetchGenre();
@@ -98,28 +102,45 @@ const Home = (): JSX.Element => {
         keyExtractor={(item, index) => item + index}
         onEndReached={loadMore}
         initialNumToRender={10}
-        renderItem={({item, index}) => {
-          console.log(index);
+        renderItem={({item}) => {
           return (
-            <View style={{flexDirection: 'row'}}>
-              {item[0]?.backdrop_path && (
-                <Image
-                  source={{uri: `${Image_URL}${item[0].backdrop_path}`}}
-                  style={{height: wp(60), width: wp(60)}}
-                />
-              )}
-              {item[1]?.backdrop_path && (
-                <Image
-                  source={{uri: `${Image_URL}${item[1].backdrop_path}`}}
-                  style={{height: wp(60), width: wp(60)}}
-                />
-              )}
-            </View>
+            <>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: wp(4),
+                }}>
+                {item[0]?.backdrop_path && (
+                  <MovieCard
+                    image={item[0].backdrop_path}
+                    title={item[0].original_title}
+                    popularity={item[0].popularity}
+                  />
+                )}
+                {item[1]?.backdrop_path && (
+                  <MovieCard
+                    image={item[1].backdrop_path}
+                    title={item[1].original_title}
+                    popularity={item[1].popularity}
+                  />
+                )}
+              </View>
+              <BlankSpace height={wp(4)} />
+            </>
           );
         }}
         renderSectionHeader={({section: {title}}) => (
-          <View>
-            <Text>{title}</Text>
+          <View style={{paddingHorizontal: wp(4), paddingVertical: wp(3)}}>
+            <Text
+              style={{
+                color: Colors.secondary_003,
+                fontSize: wp(4.8),
+                fontWeight: 'bold',
+                fontFamily: Fonts.Archivo_Regular,
+              }}>
+              {title}
+            </Text>
           </View>
         )}
       />

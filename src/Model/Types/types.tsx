@@ -53,6 +53,23 @@ export type convertedMovieListType =
     }
   | [];
 
+export type innerArrayType = {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}[][];
+
 export type buttonComponentType = {
   item: {
     id: string | number;
@@ -61,3 +78,5 @@ export type buttonComponentType = {
   movieModel: MovieModel;
   filterHandler: Function;
 };
+
+export type MovieCardType = {popularity: number; image: string; title: string};
