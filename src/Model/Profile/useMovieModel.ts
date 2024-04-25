@@ -9,6 +9,8 @@ export const useMovieModel = () => {
   const [primary_release_year, setPrimary_release_year] =
     useState<number>(2012);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const [movies, setMovies] = useState([]);
 
   const getGenre = (): genreListType => {
@@ -36,6 +38,8 @@ export const useMovieModel = () => {
   };
 
   return {
+    setIsLoading,
+    isLoading,
     setMovies,
     movies,
     getGenre,

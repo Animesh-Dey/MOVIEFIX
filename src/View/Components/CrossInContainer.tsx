@@ -1,24 +1,35 @@
-import {View, Text, ImageBackground} from 'react-native';
 import React from 'react';
-import {Image_URL} from '../../Utils/constants';
+import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import BackDrop from './BackDrop';
-import {Fonts} from '../../Utils/Fonts';
 import {useColor} from '../../Model/Color/useColor';
+import {Fonts} from '../../Utils/Fonts';
+import {images} from '../../Utils/ImagePath';
 import {StringFormatter} from '../../Utils/StringFormatter';
-import {MovieCardType} from '../../Model/Types/types';
-import CrossInContainer from './CrossInContainer';
+import {CrossInContainerTypes} from '../../Model/Types/types';
 
-const MovieCard = ({popularity, image, title}: MovieCardType) => {
+const CrossInContainer = ({popularity, title}: CrossInContainerTypes) => {
   const Colors = useColor();
-  return image ? (
+  return (
     <ImageBackground
-      source={{uri: `${Image_URL}${image}`}}
-      style={{height: wp(60), width: wp(44)}}>
-      <BackDrop />
+      source={images.BlankImage}
+      style={{
+        height: wp(60),
+        width: wp(44),
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Text
+        style={{
+          fontSize: wp(3.2),
+          fontFamily: Fonts.Archivo_Regular,
+          fontWeight: 600,
+          color: Colors.secondary_003,
+        }}>
+        Image
+      </Text>
       <View
         style={{
           position: 'absolute',
@@ -45,9 +56,7 @@ const MovieCard = ({popularity, image, title}: MovieCardType) => {
         </Text>
       </View>
     </ImageBackground>
-  ) : (
-    <CrossInContainer popularity={popularity} title={title} />
   );
 };
 
-export default MovieCard;
+export default CrossInContainer;

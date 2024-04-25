@@ -6,6 +6,7 @@ export enum ColorName {
   'secondary_002' = 'secondary_002',
   'secondary_003' = 'secondary_003',
   'secondary_004' = 'secondary_004',
+  'secondary_005' = 'secondary_005',
 }
 
 export type ColorObject = {[key in ColorName]: string};

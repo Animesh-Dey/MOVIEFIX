@@ -80,3 +80,8 @@ export type buttonComponentType = {
 };
 
 export type MovieCardType = {popularity: number; image: string; title: string};
+
+export type CrossInContainerTypes = {
+  popularity: number;
+  title: string;
+};

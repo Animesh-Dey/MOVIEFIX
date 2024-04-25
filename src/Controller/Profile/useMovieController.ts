@@ -1,9 +1,7 @@
 import {apiServices} from '../../Adapter/Axios/axiosService';
 import {MovieModel} from '../../Model/Profile/useMovieModel';
-import {
-  _fetchGenere,
-  _fetchMoviesType,
-} from '../../Model/Types/types';
+import {_fetchGenere, _fetchMoviesType} from '../../Model/Types/types';
+import {ErrorMethods} from '../../Utils/ErrorHandler';
 import {tmdbApiKey} from '../../Utils/constants';
 
 export const useMovieController = (movieModel: MovieModel) => {
@@ -21,12 +19,14 @@ export const useMovieController = (movieModel: MovieModel) => {
       ]);
       return;
     } catch (error) {
+      ErrorMethods.errorHandler(error);
       console.log(error, '_fetchGenere');
     }
   };
 
   const _fetchMovies = async () => {
     try {
+      movieModel.setIsLoading(true);
       const response: _fetchMoviesType = await apiServices.getCall(
         movieModel.getSelectedGenreId() === '*/*'
           ? `/discover/movie?api_key=${tmdbApiKey}&sort_by=popularity.desc&primary_release_year=${movieModel.getPrimaryReleaseYear()}&page=1&vote_count.gte=100`
@@ -43,8 +43,11 @@ export const useMovieController = (movieModel: MovieModel) => {
         }
         movieModel.setMovies(prev => prev.concat(convertedMovies));
       }
+      movieModel.setIsLoading(false);
       return;
     } catch (error) {
+      movieModel.setIsLoading(false);
+      ErrorMethods.errorHandler(error);
       console.log(error, '_fetchMovies');
     }
   };

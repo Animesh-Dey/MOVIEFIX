@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  SectionList,
-} from 'react-native';
+import {View, Text, Image, SectionList, ActivityIndicator} from 'react-native';
 import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import Background from '../Components/Background';
 import {useColor} from '../../Model/Color/useColor';
@@ -102,7 +97,7 @@ const Home = (): JSX.Element => {
         keyExtractor={(item, index) => item + index}
         onEndReached={loadMore}
         initialNumToRender={10}
-        renderItem={({item}) => {
+        renderItem={({item, index}) => {
           return (
             <>
               <View
@@ -113,14 +108,14 @@ const Home = (): JSX.Element => {
                 }}>
                 {item[0]?.backdrop_path && (
                   <MovieCard
-                    image={item[0].backdrop_path}
+                    image={index >= 4 ? '' : item[0].backdrop_path}
                     title={item[0].original_title}
                     popularity={item[0].popularity}
                   />
                 )}
                 {item[1]?.backdrop_path && (
                   <MovieCard
-                    image={item[1].backdrop_path}
+                    image={index >= 4 ? '' : item[1].backdrop_path}
                     title={item[1].original_title}
                     popularity={item[1].popularity}
                   />
@@ -143,6 +138,11 @@ const Home = (): JSX.Element => {
             </Text>
           </View>
         )}
+        ListFooterComponent={() =>
+          movieModel.isLoading && (
+            <ActivityIndicator color={Colors.secondary_003} />
+          )
+        }
       />
     </Background>
   );
