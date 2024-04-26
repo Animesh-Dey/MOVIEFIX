@@ -12,6 +12,7 @@ const Button = ({item, movieModel, filterHandler}: buttonComponentType) => {
   const Colors = useColor();
   return (
     <TouchableOpacity
+      disabled={item.id === movieModel.getSelectedGenreId() ? true : false}
       onPress={() => filterHandler(item.id)}
       style={{
         backgroundColor:

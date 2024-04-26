@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ImageBackground, Text} from 'react-native';
+import {View, ImageBackground, Text} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
