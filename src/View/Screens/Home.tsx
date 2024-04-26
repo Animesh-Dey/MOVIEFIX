@@ -44,11 +44,6 @@ const Home = (): JSX.Element => {
   };
 
   const filterHandler = (filterId: string | number): void => {
-    sectionListRef.current?.scrollToLocation({
-      animated: false,
-      itemIndex: 0,
-      sectionIndex: 0,
-    });
     movieModel.setselectedGenreId(filterId);
     movieModel.setPrimaryReleaseYear(2012);
     movieModel.setMovies([]);
@@ -138,6 +133,7 @@ const Home = (): JSX.Element => {
             </Text>
           </View>
         )}
+        onEndReachedThreshold={0.2}
         ListFooterComponent={() =>
           movieModel.isLoading && (
             <ActivityIndicator color={Colors.secondary_003} />
