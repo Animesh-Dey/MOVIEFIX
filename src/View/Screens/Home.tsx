@@ -1,5 +1,5 @@
 import {View, Text, Image, SectionList, ActivityIndicator} from 'react-native';
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef} from 'react';
 import Background from '../Components/Background';
 import {useColor} from '../../Model/Color/useColor';
 import {images} from '../../Utils/ImagePath';

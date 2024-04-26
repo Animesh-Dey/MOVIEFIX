@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, ImageBackground, Text} from 'react-native';
 import {
-  heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import {useColor} from '../../Model/Color/useColor';

@@ -2,7 +2,6 @@ import {View, Text, ImageBackground} from 'react-native';
 import React from 'react';
 import {Image_URL} from '../../Utils/constants';
 import {
-  heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import BackDrop from './BackDrop';
